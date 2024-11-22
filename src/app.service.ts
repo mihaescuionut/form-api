@@ -20,20 +20,13 @@ export class AppService {
   }
 
   async sendEmail(formRequestDto: FormRequestDto) {
-    const { name, email, subject, message } = formRequestDto;
-    //sa
-    const emailMessage = `
-      Name: ${name}
-      Email: ${email}
-      Subject: ${subject}
-      Message: ${message}
-    `;
+    const { subject } = formRequestDto;
 
     try {
       await this.mailService.sendMail(
         'shakeitlovehs@gmail.com',
         subject,
-        emailMessage,
+        formRequestDto,
       );
       return { message: 'Email sent successfully!' };
     } catch (error) {

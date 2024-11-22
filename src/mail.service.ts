@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
+import {emailTemplate} from "./templates/email-template";
+import {FormRequestDto} from "./dto/form-request.dto";
+
 
 @Injectable()
 export class MailService {
@@ -15,12 +18,15 @@ export class MailService {
     });
   }
 
-  async sendMail(to: string, subject: string, message: string) {
+  async sendMail(to: string, subject: string, formRequestDto: FormRequestDto) {
+
+    const htmlContent = emailTemplate(formRequestDto);
+
     const mailOptions = {
       from: 'shakeitlovehs@gmail.com',
       to,
       subject,
-      text: message,
+      html: htmlContent,
     };
 
     try {
